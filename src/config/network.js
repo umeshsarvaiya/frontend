@@ -2,21 +2,21 @@
 const config = {
   // Development - Local network access
   development: {
-    apiUrl: 'http://10.45.137.92:5000' || 'https://backend-1-nhfe.onrender.com',
-    socketUrl: 'http://10.45.137.92:5000' || 'https://backend-1-nhfe.onrender.com',
-    frontendUrl: 'http://10.45.137.92:3000' || 'https://backend-1-nhfe.onrender.com'
+    apiUrl: 'http://10.45.137.92:5000',
+    socketUrl: 'http://10.45.137.92:5000',
+    frontendUrl: 'http://10.45.137.92:3000'
   },
   // Local development
   local: {
-    apiUrl: 'http://localhost:5000' || 'https://backend-1-nhfe.onrender.com',
-    socketUrl: 'http://localhost:5000' || 'https://backend-1-nhfe.onrender.com',
-    frontendUrl: 'http://localhost:3000'  || 'https://backend-1-nhfe.onrender.com'
+    apiUrl: 'http://localhost:5000',
+    socketUrl: 'http://localhost:5000',
+    frontendUrl: 'http://localhost:3000'
   },
   // Production (when deployed)
   production: {
-    apiUrl: process.env.REACT_APP_API_URL || 'http://10.45.137.92:5000'  || 'https://backend-1-nhfe.onrender.com',
-    socketUrl: process.env.REACT_APP_SOCKET_URL || 'http://10.45.137.92:5000' || 'https://backend-1-nhfe.onrender.com',
-    frontendUrl: process.env.REACT_APP_FRONTEND_URL || 'http://10.45.137.92:3000'  || 'https://backend-1-nhfe.onrender.com'
+    apiUrl: process.env.REACT_APP_API_URL || 'https://backend-1-nhfe.onrender.com',
+    socketUrl: process.env.REACT_APP_SOCKET_URL || 'https://backend-1-nhfe.onrender.com',
+    frontendUrl: process.env.REACT_APP_FRONTEND_URL || 'https://frontend-eight-chi-46.vercel.app'
   }
 };
 
