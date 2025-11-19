@@ -2,7 +2,7 @@
 const config = {
   // Development - Local network access
   development: {
-    apiUrl: 'http://10.45.137.92:5000',
+    apiUrl: 'http://10.45.137.92:5000' || 'https://backend-1-nhfe.onrender.com',
     socketUrl: 'http://10.45.137.92:5000' || 'https://backend-1-nhfe.onrender.com',
     frontendUrl: 'http://10.45.137.92:3000' || 'https://backend-1-nhfe.onrender.com'
   },
