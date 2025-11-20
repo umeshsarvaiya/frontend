@@ -212,9 +212,17 @@ const Navbar = () => {
             sx={{ 
               flexGrow: 1, 
               color: 'primary.main',
-              fontWeight: 'bold'
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1
             }}
           >
+            <img 
+              src={logo} 
+              alt="ProFinder Logo" 
+              style={{ height: 32, marginRight: 8 }} 
+            />
             ProFinder
           </Typography>
           <CircularProgress size={24} color="primary" />
