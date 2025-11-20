@@ -538,7 +538,7 @@ const AdminList = () => {
               <Card
                 sx={{
                   height: "100%",
-                  borderRadius: 4,
+                  borderRadius: 2,
                   boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
                   transition: "0.3s",
                   "&:hover": { transform: "translateY(-6px)" },
@@ -619,7 +619,7 @@ const AdminList = () => {
                 variant="contained"
                 fullWidth
                 sx={{
-                  borderRadius: 3,
+                  borderRadius: 2,
                   textTransform: "none",
                   background:
                     "linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)",
@@ -688,238 +688,138 @@ const AdminList = () => {
       </Typography>
 
       {/* Categories Grid */}
-      <Grid container spacing={6} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <Grid
+        container
+        spacing={{ xs: 2.5, sm: 3, md: 4 }}
+        sx={{
+          justifyContent: "center",
+          alignItems: "stretch",
+        }}
+      >
         {filteredCategories.map((category, index) => (
-          <Grid item xs={12} sm={6} md={4} lg={2} key={index} >
-            <motion.div
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.95 }}
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.05 }}
-            >
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
+            
               <Card
                 sx={{
+                  position: "relative",
+                  height: "100%",
+                  borderRadius: 4,
+                  px: 3,
+                  py: 4,
                   textAlign: "center",
-                  borderRadius: 3,
-                  height:"100%",
-                  width:"150%",
-                  boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
-                  cursor: "pointer",
-                  transition: "0.3s",
+                  overflow: "hidden",
+                  background: "linear-gradient(145deg, #ffffff, #f3f6ff)",
+                  boxShadow: "0 20px 35px rgba(15, 23, 42, 0.08)",
+                  border: "1px solid rgba(99,102,241,0.08)",
+                  transition: "all 0.35s ease",
+                  "&:before": {
+                    content: '""',
+                    position: "absolute",
+                    inset: 0,
+                    opacity: 0,
+                    background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
+                    transition: "opacity 0.35s ease",
+                  },
                   "&:hover": {
-                    boxShadow: "0 10px 20px rgba(0,0,0,0.2)",
-                    bgcolor: "white",
-                    color: "blue",
-                    zIndex:-1,
+                    boxShadow: "0 25px 40px rgba(99,102,241,0.25)",
+                  },
+                  "&:hover:before": {
+                    opacity: 1,
+                  },
+                  "& *": {
+                    position: "relative",
+                    zIndex: 1,
+                  },
+                  "&:hover .category-title": {
+                    color: "#fff",
+                  },
+                  "&:hover .category-icon": {
+                    backgroundColor: "rgba(255,255,255,0.18)",
+                    color: "#fff",
+                  },
+                  "&:hover .category-pill": {
+                    backgroundColor: "rgba(255,255,255,0.22)",
+                    color: "#fff",
                   },
                 }}
               >
-                <CardContent>
-                  <Box sx={{ mb: 1 }}>{category.icon}</Box>
-                  <Typography variant="h6">{category.name}</Typography>
+                <CardContent sx={{ p: 0, display: "flex", flexDirection: "column", gap: 2 }}>
+                  <Box
+                    className="category-icon"
+                    sx={{
+                      width: 72,
+                      height: 72,
+                      mx: "auto",
+                      borderRadius: "50%",
+                      backgroundColor: "rgba(99,102,241,0.08)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: 36,
+                      color: "#5b21b6",
+                      transition: "all 0.3s ease",
+                    }}
+                  >
+                    {category.icon}
+                  </Box>
+                  <Typography
+                    className="category-title"
+                    variant="h6"
+                    fontWeight={700}
+                    sx={{ color: "text.primary" }}
+                  >
+                    {category.name}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "text.secondary",
+                      maxWidth: 220,
+                      mx: "auto",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Curated professionals delivering top-rated services.
+                  </Typography>
+                  <Box
+                    className="category-pill"
+                    sx={{
+                      mt: 1,
+                      alignSelf: "center",
+                      px: 2,
+                      py: 0.5,
+                      borderRadius: 999,
+                      fontSize: 12,
+                      fontWeight: 600,
+                      textTransform: "uppercase",
+                      letterSpacing: 0.8,
+                      backgroundColor: "rgba(99,102,241,0.12)",
+                      color: "#4338ca",
+                      transition: "all 0.3s ease",
+                    }}
+                  >
+                    Explore
+                  </Box>
                 </CardContent>
               </Card>
-            </motion.div>
+           
           </Grid>
         ))}
       </Grid>
     </Container>
 
 
-      {/* Features Section */}
-      <Container
-        maxWidth="lg"
-        sx={{
-          mb: 8, // more bottom margin for spacing
-          mt: 8, // top margin
-          px: 2,
-        }}
-      >
-        {/* Section Heading */}
-        <Typography
-          variant="h1"
-          component="h1"
-          textAlign="center"
-          
-          sx={{ mb: 6, fontWeight: "bold", color: "primary.main", }}
-        >
-          Why Choose ProFinder?
-        </Typography>
+     
+     
 
-        {/* Features Grid */}
-        <Grid container spacing={4} >
-          {features.map((feature, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
-              <Card
-                elevation={4}
-                sx={{
-                  height: "100%", // ensures equal card height
-                  minHeight: 250, // set a minimum so all are uniform
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  transition: "all 0.3s ease-in-out",
-                  "&:hover": {
-                    transform: "translateY(-6px)",
-                    boxShadow: "0px 8px 20px rgba(0,0,0,0.15)",
-                  },
-                  borderRadius: 3,
-                  textAlign: "center",
-                  px: 2,
-                  py: 3,
-                }}
-              >
-                <CardContent>
-                  <Box
-                    sx={{
-                      mb: 3,
-                      fontSize: 40,
-                      color: "primary.main",
-                      display: "flex",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {feature.icon}
-                  </Box>
-                  <Typography variant="h6" component="h3" gutterBottom>
-                    {feature.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {feature.description}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
+      
+      
 
-      {/* How ProFinder Works Section */}
-      <Container
-        maxWidth="lg"
-        sx={{
-          mb: { xs: 5, sm: 6, md: 8 },
-          py: { xs: 5, sm: 6, md: 8 },
-
-          backgroundColor: "#f5f7fa", // 🌟 Section background
-          borderRadius: 3,
-        }}
-      >
-        {/* Section Heading */}
-        <Typography
-          variant={isMobile ? "h4" : "h3"}
-          component="h2"
-          textAlign="center"
-          gutterBottom
-          sx={{
-            mb: { xs: 4, sm: 5 },
-            fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
-            fontWeight: "bold",
-            color: "primary.main",
-          }}
-        >
-          How ProFinder Works
-        </Typography>
-
-        <Grid container spacing={4} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          {[
-            {
-              num: 1,
-              color: "primary.main",
-              title: "Search",
-              desc: "Find verified experts",
-            },
-            {
-              num: 2,
-              color: "success.main",
-              title: "Connect",
-              desc: "Message professionals securely",
-            },
-            {
-              num: 3,
-              color: "info.main",
-              title: "Collaborate",
-              desc: "Work together effectively",
-            },
-            {
-              num: 4,
-              color: "warning.main",
-              title: "Review",
-              desc: "Share helpful feedback",
-            },
-            
-          ].map((step, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index}>
-              <Card
-                elevation={4}
-                sx={{
-                  textAlign: "center",
-                  p: { xs: 3, sm: 4 },
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-start",
-                  borderRadius: 3,
-                  transition: "0.3s",
-                  "&:hover": {
-                    transform: "translateY(-6px)",
-                    boxShadow: 9,
-                  },
-                }}
-              >
-                {/* Number Circle */}
-                <Box
-                  sx={{
-                    width: { xs: 55, sm: 60, md: 70 },
-                    height: { xs: 55, sm: 60, md: 70 },
-                    borderRadius: "50%",
-                    backgroundColor: step.color,
-                    color: "white",
-                    fontWeight: "bold",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" },
-                    mx: "auto",
-                    mb: 2.5,
-                  }}
-                >
-                  {step.num}
-                </Box>
-
-                {/* Step Title */}
-                <Typography
-                  variant="h3"
-                  gutterBottom
-                  sx={{
-                    fontSize: { xs: "1.25rem", sm: "1.4rem", md: "1.5rem" },
-                    fontWeight: 600,
-                    color: "text.primary",
-                  }}
-                >
-                  {step.title}
-                </Typography>
-
-                {/* Description */}
-                <Typography
-                  variant="body1"
-                  color="text.secondary"
-                  sx={{ fontSize: { xs: "0.9rem", sm: "1rem" } }}
-                >
-                  {step.desc}
-                </Typography>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-
-      {/* Call to Action */}
+     
       <Box
         sx={{
           background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-          borderRadius: 3,
+          // borderRadius: 3,
           p: { xs: 4, md: 6 },
           mt: 6,
           mb: 4,

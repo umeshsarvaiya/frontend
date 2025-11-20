@@ -19,6 +19,7 @@ import {
   Grid,
   useTheme,
   useMediaQuery,
+  Stack,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { PersonAdd as RegisterIcon } from "@mui/icons-material";
@@ -80,15 +81,15 @@ const Register = () => {
     } catch (err) {
       console.error('OTP send error:', err);
       
-      // For development/testing - allow bypass if server is down
-      if (err.code === 'NETWORK_ERROR' || err.message === 'Network Error' || err.response?.status >= 500) {
-        console.log('Server error detected, enabling development bypass');
-        showSuccessToast("Development mode: OTP bypass enabled. Use 123456 as OTP.");
-        setEmailSent(true);
-        // Store a test OTP for development
-        window.testOTP = '123456';
-        return;
-      }
+      // // For development/testing - allow bypass if server is down
+      // if (err.code === 'NETWORK_ERROR' || err.message === 'Network Error' || err.response?.status >= 500) {
+      //   console.log('Server error detected, enabling development bypass');
+      //   showSuccessToast("Development mode: OTP bypass enabled. Use 123456 as OTP.");
+      //   setEmailSent(true);
+      //   // Store a test OTP for development
+      //   window.testOTP = '123456';
+      //   return;
+      // }
       
       let errorMsg = "Failed to send OTP. Please try again.";
       if (err.response?.data?.message) {
@@ -149,248 +150,178 @@ const Register = () => {
     }
   };
 
+  const layoutBackground =
+    "radial-gradient(circle at top left, rgba(114, 103, 255, 0.35), transparent 45%), radial-gradient(circle at bottom right, rgba(118, 75, 162, 0.4), transparent 40%), linear-gradient(135deg, #0f172a 0%, #1e1b4b 45%, #312e81 100%)";
+
+  const formShellStyles = {
+    p: { xs: 4, sm: 5 },
+    borderRadius: 4,
+    boxShadow: "0 30px 60px rgba(15,15,45,0.35)",
+    backgroundColor: "rgba(255,255,255,0.97)",
+    border: "1px solid rgba(255,255,255,0.4)",
+    backdropFilter: "blur(14px)",
+  };
+
+  const textFieldStyles = {
+    "& .MuiOutlinedInput-root": {
+      borderRadius: 2.5,
+      "& fieldset": { borderColor: "rgba(99,102,241,0.3)" },
+      "&:hover fieldset": { borderColor: "rgba(99,102,241,0.6)" },
+      "&.Mui-focused fieldset": { borderColor: "primary.main" },
+    },
+  };
+
   return (
-    <Grid
-      container
-      spacing={0}
-      sx={{
-        minHeight: "90vh",
-        flexDirection: { xs: "column-reverse", md: "row" },
-      }}
-    >
-      <Grid
-        item
-        xs={12}
-        md={6}
-        sx={{
-          background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-          color: "white",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          px: 3,
-          py: { xs: 6, md: 0 },
-          width: { xs: "100%", md: "50%" },
-        }}
-      >
-        <Box>
-          <Typography variant={isMobile ? "h4" : "h2"} fontWeight="bold">
-            Join ProFinder
-          </Typography>
-          <Typography variant={isMobile ? "body1" : "h5"} sx={{ opacity: 0.9 }}>
-            Trusted professionals at your fingertips.
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              maxWidth: 450,
-              mx: "auto",
-              opacity: 0.85,
-              fontSize: isMobile ? "0.9rem" : "1rem",
-            }}
-          >
-            Whether you're a service provider or someone in need of help,
-            ProFinder helps you connect quickly and safely.
-          </Typography>
-          <Box mt={4}>
-            <img
-              src={Logo}
-              alt="ProFinder"
-              style={{ width: "100%", maxWidth: 300, borderRadius: 10 }}
+    <Box sx={{ minHeight: "100vh", background: layoutBackground, display: "flex", alignItems: "center", justifyContent: "center", px: { xs: 2, sm: 4 }, py: { xs: 6, md: 0 } }}>
+      <Container maxWidth="sm" sx={{ px: { xs: 0, sm: 2 } }}>
+        <Paper elevation={0} sx={formShellStyles}>
+          <Box textAlign="center" mb={3}>
+            
+          <img 
+              src={Logo} 
+              alt="ProFinder Logo" 
+              style={{ height: 100, marginRight: 8 }} 
             />
+            <Typography variant="h4" fontWeight={700} gutterBottom>
+              Create your account
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Verify your email to unlock curated leads tailored to you.
+            </Typography>
           </Box>
-        </Box>
-      </Grid>
-
-      <Grid
-        item
-        xs={12}
-        md={6}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          px: 2,
-        }}
-      >
-        <Container maxWidth="sm">
-          <Paper elevation={1} sx={{ p: 2, borderRadius: 3 }}>
-            <Box textAlign="center" mb={3}>
-              <RegisterIcon
-                sx={{ fontSize: 48, color: "primary.main", mb: 2 }}
-              />
-              <Typography variant="h5">Create Your Account</Typography>
-              <Typography variant="body2">
-                Start connecting with trusted professionals today
-              </Typography>
-            </Box>
+          <TextField
+            fullWidth
+            label="Full Name"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            margin="normal"
+            required
+            disabled={loading}
+            sx={textFieldStyles}
+          />
+          <TextField
+            fullWidth
+            label="Email"
+            name="email"
+            value={form.email}
+            onChange={handleChange}
+            margin="normal"
+            required
+            error={!!emailError}
+            helperText={emailError}
+            disabled={loading}
+            sx={textFieldStyles}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Typography
+                    component="span"
+                    sx={{
+                      color: emailVerified ? "success.main" : "primary.main",
+                      fontWeight: emailVerified ? 600 : 500,
+                      cursor: emailVerified ? "default" : "pointer",
+                      fontSize: "0.85rem",
+                    }}
+                    onClick={!emailVerified ? handleSendOtp : undefined}
+                  >
+                    {emailVerified ? "✔ Verified" : emailSent ? "Resend OTP" : "Send OTP"}
+                  </Typography>
+                </InputAdornment>
+              ),
+            }}
+          />
+          {emailSent && !emailVerified && (
             <TextField
               fullWidth
-              label="Full Name"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
+              label="Enter OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
               margin="normal"
               required
               disabled={loading}
-            />
-            <TextField
-              fullWidth
-              label="Email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              margin="normal"
-              required
-              error={!!emailError}
-              helperText={emailError}
-              disabled={loading}
+              sx={textFieldStyles}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <label
-                      style={{
-                        color: emailVerified ? "green" : "#1976d2", // default MUI blue
-                        fontWeight: emailVerified ? 600 : 500,
-                        cursor: emailVerified ? "default" : "pointer",
-                      }}
-                      onClick={!emailVerified ? handleSendOtp : undefined}
-                    >
-                      {emailVerified
-                        ? "✔ Verified"
-                        : emailSent
-                          ? "Resend OTP"
-                          : "Send OTP"}
-                    </label>
+                    <Button onClick={handleVerifyOtp} size="small" disabled={!otp || loading}>
+                      Verify OTP
+                    </Button>
                   </InputAdornment>
                 ),
               }}
             />
-            {emailSent && !emailVerified && (
-              <TextField
-                fullWidth
-                label="Enter OTP"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                margin="normal"
-                required
-                disabled={loading}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <Button
-                        onClick={handleVerifyOtp}
-                        size="small"
-                        disabled={!otp || loading}
-                      >
-                        Verify OTP
-                      </Button>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            )}
-            <TextField
-              fullWidth
-              label="Password"
-              name="password"
-              type={showPassword ? "text" : "password"}
-              value={form.password}
-              onChange={handleChange}
-              margin="normal"
-              required
-              error={!!passwordError}
-              helperText={passwordError}
-              disabled={loading}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      onClick={() => setShowPassword((prev) => !prev)}
-                      edge="end"
-                      size="small"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
-              <Checkbox
-                checked={agreeTerms}
-                onChange={(e) => setAgreeTerms(e.target.checked)}
-                disabled={loading}
-              />
-              <Typography variant="body2" color="text.secondary">
-                I agree to the{" "}
-                <Link
-                  component="button"
-                  onClick={() => setOpenDialog("terms")}
-                  sx={{ textDecoration: "underline" }}
-                >
-                  Terms & Conditions
-                </Link>{" "}
-                and{" "}
-                <Link
-                  component="button"
-                  onClick={() => setOpenDialog("privacy")}
-                  sx={{ textDecoration: "underline" }}
-                >
-                  Privacy Policy
-                </Link>
-              </Typography>
-            </Box>
-            <Button
-              variant="contained"
-              fullWidth
-              size="large"
-              onClick={handleSubmit}
-              disabled={
-                loading ||
-                !agreeTerms ||
-                !emailVerified ||
-                !form.name ||
-                !!emailError ||
-                !!passwordError ||
-                !form.password
-              }
-              sx={{ mt: 2, py: 1.5 }}
-            >
-              {loading ? (
-                <CircularProgress size={24} sx={{ color: "white" }} />
-              ) : (
-                "Sign Up"
-              )}
-            </Button>
-            <Box textAlign="center" mt={3}>
-              <Typography variant="body2" color="text.secondary">
-                Already have an account?{" "}
-                <Link
-                  component="button"
-                  onClick={() => navigate("/login")}
-                  sx={{ fontWeight: 600, color: "primary.main" }}
-                >
-                  Sign in
-                </Link>
-              </Typography>
-            </Box>
-          </Paper>
-        </Container>
-      </Grid>
+          )}
+          <TextField
+            fullWidth
+            label="Password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            value={form.password}
+            onChange={handleChange}
+            margin="normal"
+            required
+            error={!!passwordError}
+            helperText={passwordError}
+            disabled={loading}
+            sx={textFieldStyles}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setShowPassword((prev) => !prev)} edge="end" size="small">
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+            <Checkbox checked={agreeTerms} onChange={(e) => setAgreeTerms(e.target.checked)} disabled={loading} />
+            <Typography variant="body2" color="text.secondary">
+              I agree to the{" "}
+              <Link component="button" onClick={() => setOpenDialog("terms")} sx={{ textDecoration: "underline" }}>
+                Terms & Conditions
+              </Link>{" "}
+              and{" "}
+              <Link component="button" onClick={() => setOpenDialog("privacy")} sx={{ textDecoration: "underline" }}>
+                Privacy Policy
+              </Link>
+            </Typography>
+          </Box>
+          <Button
+            variant="contained"
+            fullWidth
+            size="large"
+            onClick={handleSubmit}
+            disabled={
+              loading ||
+              !agreeTerms ||
+              !emailVerified ||
+              !form.name ||
+              !!emailError ||
+              !!passwordError ||
+              !form.password
+            }
+            sx={{ mt: 3, py: 1.5, borderRadius: 3 }}
+          >
+            {loading ? <CircularProgress size={24} sx={{ color: "white" }} /> : "Sign Up"}
+          </Button>
+          <Box textAlign="center" mt={3}>
+            <Typography variant="body2" color="text.secondary">
+              Already have an account?{" "}
+              <Link component="button" onClick={() => navigate("/login")} sx={{ fontWeight: 600, color: "primary.main" }}>
+                Sign in
+              </Link>
+            </Typography>
+          </Box>
+        </Paper>
+      </Container>
 
-      <Dialog
-        open={openDialog === "terms"}
-        onClose={() => setOpenDialog("")}
-        fullWidth
-        maxWidth="sm"
-      >
+      <Dialog open={openDialog === "terms"} onClose={() => setOpenDialog("")} fullWidth maxWidth="sm">
         <DialogTitle>Terms & Conditions</DialogTitle>
         <DialogContent dividers>
           <Typography variant="body2" sx={{ whiteSpace: "pre-line" }}>
-            Welcome to ProFinder!\n\nBy registering on our platform, you agree
-            to abide by our terms and conditions...
+            Welcome to ProFinder!\n\nBy registering on our platform, you agree to abide by our terms and conditions...
           </Typography>
         </DialogContent>
         <DialogActions>
@@ -398,24 +329,18 @@ const Register = () => {
         </DialogActions>
       </Dialog>
 
-      <Dialog
-        open={openDialog === "privacy"}
-        onClose={() => setOpenDialog("")}
-        fullWidth
-        maxWidth="sm"
-      >
+      <Dialog open={openDialog === "privacy"} onClose={() => setOpenDialog("")} fullWidth maxWidth="sm">
         <DialogTitle>Privacy Policy</DialogTitle>
         <DialogContent dividers>
           <Typography variant="body2" sx={{ whiteSpace: "pre-line" }}>
-            Privacy Policy for ProFinder\n\nWe value your privacy and ensure
-            your data is protected...
+            Privacy Policy for ProFinder\n\nWe value your privacy and ensure your data is protected...
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenDialog("")}>Close</Button>
         </DialogActions>
       </Dialog>
-    </Grid>
+    </Box>
   );
 };
 

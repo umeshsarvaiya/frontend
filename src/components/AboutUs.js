@@ -182,116 +182,7 @@ const AboutUs = () => {
       </Paper>
 
       {/* Stats Section */}
-      <Box
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          bgcolor: "background.default",
-          p: 2,
-          marginTop: 10,
-        }}
-      >
-        <Container maxWidth="md">
-          <Box textAlign="center" mb={6}>
-            <Typography
-              variant={isMobile ? "h4" : "h1"}
-              sx={{
-                fontWeight: "bold",
-                color: "primary.main",
-                mb: 1,
-                fontSize: { xs: "2rem", md: "3rem" },
-              }}
-            >
-              Our Achievements
-            </Typography>
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              sx={{
-                maxWidth: "600px",
-                mx: "auto",
-                fontSize: { xs: "12px", md: "18px" },
-              }}
-            >
-              We are proud to showcase the milestones we’ve reached with the
-              help of our clients and team. These numbers reflect our journey
-              and commitment.
-            </Typography>
-          </Box>
-          <Grid
-            container
-            spacing={{ xs: 2, sm: 3, md: 14 }}
-            justifyContent="center"
-          >
-            {stats.map((stat, index) => (
-              <Grid item xs={12} sm={6} md={3} key={index}>
-                <Card
-                  elevation={0}
-                  sx={{
-                    textAlign: "center",
-                    p: { xs: 2, sm: 3 },
-                    height: "200px",
-                    width: "100%",
-                    borderRadius: 3,
-                    position: "relative",
-                    overflow: "hidden",
-                    "&::before, &::after": {
-                      content: '""',
-                      position: "absolute",
-                      width: "0%",
-                      height: "2px",
-                      bgcolor: "primary.main",
-                      transition: "all 0.5s ease",
-                    },
-                    "&::before": {
-                      top: 0,
-                      left: 0,
-                    },
-                    "&::after": {
-                      bottom: 0,
-                      right: 0,
-                    },
-                    "&:hover::before, &:hover::after": {
-                      width: "100%",
-                    },
-                    "&:hover": {
-                      boxShadow: "0 8px 25px rgba(0,0,0,0.15)",
-                    },
-                  }}
-                >
-                  {/* Card Content */}
-                  <Box sx={{ color: "primary.main", mb: 1 }}>
-                    {React.cloneElement(stat.icon, {
-                      sx: { fontSize: { xs: 30, sm: 36, md: 40 } },
-                    })}
-                  </Box>
-                  <Typography
-                    variant={isMobile ? "h5" : "h4"}
-                    sx={{
-                      fontWeight: "bold",
-                      color: "primary.main",
-                      fontSize: { xs: "1.5rem", sm: "1.75rem", md: "2rem" },
-                    }}
-                  >
-                    {stat.number}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      fontSize: { xs: "0.85rem", sm: "0.9rem", md: "1rem" },
-                    }}
-                  >
-                    {stat.label}
-                  </Typography>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </Box>
+     
 
       {/* Mission & Vision */}
       <Container
@@ -617,7 +508,7 @@ const AboutUs = () => {
           color: "white",
           py: { xs: 4, sm: 5, md: 6 },
           mt: { xs: 2, sm: 3, md: 4 },
-          borderRadius: "16px", // rounded border for Paper
+          // borderRadius: "16px", // rounded border for Paper
         }}
       >
         <Container maxWidth="md">
@@ -669,7 +560,7 @@ const AboutUs = () => {
         </Container>
       </Paper>
 
-      // Footer
+  
       <Footer />
     </Box>
   );
